@@ -1,0 +1,44 @@
+%!PS-Adobe
+
+%% Written by Bill Brassfield in December 2000
+
+%% Draw Spirograph patterns in a rainbow of colors!  Edit this file
+%% and change the values of the smallteeth, bigteeth, and penhole
+%% variables to generate other patterns.  Much more is possible here
+%% than there was with the original Spirograph toy.  Use Ghostview
+%% (gv) to view the patterns, and send the good ones to a color
+%% Postscript printer (such as an HP Color Laserjet 4550N).
+
+306 396 translate
+72 72 scale
+0.01 setlinewidth
+
+/smallteeth  52 def   % How many teeth on small spur gear
+/bigteeth   105 def   % How many teeth on big ring gear
+/bigradius   4 def    % Radius of ring gear in inches
+/penhole     0.9 def  % Percentage of radius from center of small gear
+
+/smallradius bigradius smallteeth mul bigteeth div def
+/maxtheta 360 smallteeth mul def
+
+bigradius smallradius sub
+smallradius penhole mul add
+0 moveto
+
+0 1 maxtheta {
+  /bigtheta exch def
+  /smalltheta bigtheta bigteeth mul smallteeth div
+  neg bigtheta add def
+
+  bigtheta maxtheta div 1 1 sethsbcolor  % Calculate hue for rainbow effect
+
+  bigradius smallradius sub bigtheta cos mul
+  smallradius penhole mul smalltheta cos mul add
+
+  bigradius smallradius sub bigtheta sin mul
+  smallradius penhole mul smalltheta sin mul add
+
+  lineto currentpoint stroke moveto
+} for
+
+showpage

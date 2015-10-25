@@ -1,0 +1,60 @@
+%!PS-Adobe
+
+%% For printing Avery laser-printer labels
+%% Sheet size: 8.5" wide by 11.0" high
+%% Label dimensions: 0.50" high by 1.75" wide
+
+306 396 translate
+72 72 scale
+
+0.01 setlinewidth
+0 setlinejoin
+
+/lineSpc 0.11 def
+/xTxtOffset -0.625 def
+/yTxtOffset -0.04 def
+
+/xCount 4 def
+/xSpc 2.00 def
+/xOff -3.00 def
+
+/yCount 20 def
+/ySpc 0.50 def
+/yOff -4.75 def
+
+/drawAddrBox {
+  /ypos exch def
+  /xpos exch def
+
+  /xBoxLen 1.75 def
+  /yBoxLen 0.50 def
+
+  /Helvetica-Bold findfont
+  0.09 scalefont setfont
+
+  newpath
+  xpos ypos yTxtOffset add moveto
+  xTxtOffset lineSpc rmoveto
+  (Wolfgang A. Mozart) show
+
+  newpath
+  xpos ypos yTxtOffset add moveto
+  xTxtOffset 0 rmoveto
+  (12345 Nonexistent Street) show
+
+  newpath
+  xpos ypos yTxtOffset add moveto
+  xTxtOffset 0 lineSpc sub rmoveto
+  (Beverly Hills, CA  90210-1234) show
+} def
+
+0 1 yCount 1 sub {
+  ySpc mul yOff add
+  /yloop exch def
+  0 1 xCount 1 sub {
+    xSpc mul xOff add
+    yloop drawAddrBox
+  } for
+} for
+
+showpage

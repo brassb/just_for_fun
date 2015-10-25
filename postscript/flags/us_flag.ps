@@ -1,0 +1,160 @@
+%!PS-Adobe
+
+%% ############################
+%% # Postscript hand-coded by #
+%% # William R. Brassfield    #
+%% # September 14, 2001       #
+%% ############################
+
+306 396 translate
+192 192 scale
+90 rotate
+
+%% ##################################
+%% # Standard Proportions Values    #
+%% # (according to the official     #
+%% # U.S. Flag specifications in    #
+%% # Department of Defense Standard #
+%% # DDD-F-416E)                    #
+%% ##################################
+
+/aa 1.0      def  %% Hoist  (width) of flag
+/bb 1.9      def  %% Fly   (length) of flag
+/cc 7 13 div def  %% Hoist  (width) of union
+/dd .76      def  %% Fly   (length) of union
+/ee .054     def
+/ff .054     def
+/gg .063     def
+/hh .063     def
+/kk .0616    def  %% Diameter of star
+/ll 1 13 div def  %% Width of stripe
+
+%% ##############################
+%% # "Official" colors based on #
+%% # Red,  Pantone PMS 193      #
+%% # Blue, Pantone PMS 282      #
+%% ##############################
+
+/redstripecolor [ 223   22  43   ] def
+/bluefieldcolor [   5   20  63   ] def
+
+%% /bluefieldcolor [  7.5  30  94.5 ] def  %% lighter than spec
+%% /bluefieldcolor [  10   40 126   ] def  %% even lighter
+
+%% ################################
+%% # descriptive global variables #
+%% ################################
+
+/stripelen   bb def
+/stripewid   ll def
+/starradius  kk def
+/starxspace  hh def
+/staryspace  ff def
+/starxinit   gg def
+/staryinit   ee def
+
+%% #########################################
+%% # First, the red and white stripes      #
+%% # 6 white stripes between 7 red stripes #
+%% #########################################
+
+%% How to draw a single red stripe:
+
+/redstripe {
+  redstripecolor 0 get 255 div
+  redstripecolor 1 get 255 div
+  redstripecolor 2 get 255 div
+  setrgbcolor
+
+  stripelen neg stripeypos
+    moveto
+  stripelen neg stripeypos stripewid 2 mul add
+    lineto
+  stripelen     stripeypos stripewid 2 mul add
+    lineto
+  stripelen     stripeypos
+    lineto
+  fill
+} def
+
+/stripeypos -1  def
+redstripe
+1 1 6 {
+  /stripeypos stripeypos stripewid 4 mul add def
+  redstripe
+} for
+
+%% ############################################
+%% # The blue rectangular field for the stars #
+%% ############################################
+
+/stripeypos stripeypos stripewid 2 mul add def
+  bluefieldcolor 0 get 255 div
+  bluefieldcolor 1 get 255 div
+  bluefieldcolor 2 get 255 div
+  setrgbcolor
+
+stripelen neg stripeypos
+  moveto
+stripelen neg stripeypos stripewid 14 mul sub
+  lineto
+stripelen neg stripelen .76 mul add stripeypos stripewid 14 mul sub
+  lineto
+stripelen neg stripelen .76 mul add stripeypos
+  lineto
+fill
+
+%% #####################################
+%% # Now, to draw all 50 stars!        #
+%% # (a 4-row by 5-column array inside #
+%% #  a 5-row by 6-column array)       #
+%% #####################################
+
+%% How to draw a single star:
+
+/drawstar {
+  1 setgray
+
+  /theta 90 def
+
+  /x theta cos starradius mul def
+  /y theta sin starradius mul def
+  starxpos x add starypos y add moveto
+
+  1 1 4 {
+    /theta theta 144 add def
+
+    /x theta cos starradius mul def
+    /y theta sin starradius mul def
+    starxpos x add starypos y add lineto
+  } for
+
+  fill
+} def
+
+%% The 5-row by 6-column array:
+
+/starxpos stripelen neg starxspace 2.5 mul sub def
+1 1 6 {
+  /starxpos starxpos starxspace 4 mul add def
+  /starypos stripewid neg staryspace 2 mul sub def
+  1 1 5 {
+    /starypos starypos staryspace 4 mul add def
+    drawstar
+  } for
+} for
+
+%% The 4-row by 5-column array:
+
+/starxpos stripelen neg starxspace .5 mul sub def
+1 1 5 {
+  /starxpos starxpos starxspace 4 mul add def
+  /starypos stripewid neg staryspace 0 mul sub def
+  1 1 4 {
+    /starypos starypos staryspace 4 mul add def
+    drawstar
+  } for
+} for
+
+showpage
+
