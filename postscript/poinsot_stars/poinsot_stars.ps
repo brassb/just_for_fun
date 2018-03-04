@@ -1,0 +1,70 @@
+%!PS-Adobe
+
+%% Written by Bill Brassfield in February 2018
+%%
+%% This brings me back to the days of math class when I was in middle
+%% school.  The math teacher showed us how to draw Poinsot Stars
+%% (pronounced "PWON-soh").  Most of the stars we drew in class had
+%% at most 15 or 20 points, and it was difficult to get that many
+%% equally-spaced points located along the circumference of a circle,
+%% using only a compass, straight edge, and perhaps a protractor for
+%% those angles which were difficult or impossible to construct.  It
+%% was time-consuming and error-prone, but the results were beautiful.
+%%
+%% Poinsot Stars are trivially easy to draw using Adobe Postscript and
+%% a viewer program which can display the results, convert to PDF, and
+%% print to hardcopy if desired.  Much better than doing it by hand!
+%%
+%% My 5-year-old son Andy loves to play with this program, tweaking
+%% the values of the numpoints and increment variables to see what
+%% type of beautiful pattern will be drawn onto the computer screen.
+%%
+%% A few sample star configurations are provided in this file; just
+%% uncomment one (and only one) star configuration and open this file
+%% in a modern Postscript/PDF viewer utility to see what it looks like.
+%%
+%% NOTE: The values of the numpoints and increment variables must be
+%% relatively prime to each other (they must have no common factors).
+%% Failure to observe this will result in a star with fewer points
+%% than expected.
+
+306 396 translate
+72 72 scale
+90 rotate
+0.01 setlinewidth
+
+%% The standard, familiar 5-pointed star hand-drawn by nearly everyone
+% /numpoints    5 def  % How many points in the star
+% /increment    2 def  % How many points to increment by when drawing
+% /radius       4 def  % How big is the star defined by radius in inches
+
+%% A simple 8-pointed star (easy to hand draw on paper)
+% /numpoints    8 def  % How many points in the star
+% /increment    3 def  % How many points to increment by when drawing
+% /radius       4 def  % How big is the star defined by radius in inches
+
+%% A nice-looking 14-pointed star
+% /numpoints   14 def  % How many points in the star
+% /increment    5 def  % How many points to increment by when drawing
+% /radius       4 def  % How big is the star defined by radius in inches
+
+%% A 100-pointed star (very complex; looks a bit like a Spirograph pattern)
+/numpoints  100 def  % How many points in the star
+/increment   43 def  % How many points to increment by when drawing
+/radius       4 def  % How big is the star defined by radius in inches
+
+newpath
+radius 0 moveto
+
+/theta    0 def  % Start at 0 degrees
+/pointidx 0 def  % Start at point index 0
+0 1 numpoints {
+  /pointidx pointidx increment add def
+  /theta 360 pointidx mul numpoints div def
+
+  radius theta cos mul
+  radius theta sin mul lineto
+} for
+stroke
+
+showpage
