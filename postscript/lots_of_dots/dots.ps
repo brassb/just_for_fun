@@ -1,0 +1,61 @@
+%!PS-Adobe
+
+%% Written by Bill Brassfield in March 2018
+%%
+%% Why did I write this?
+%%
+%% For teaching my 5-year-old son Andy what large numbers of dots
+%% (in the thousands) look like on an 8.5" by 11" piece of paper.
+%%
+%% Hopefully, this will illustrate the usefulness of multiplication
+%% (of the number of rows x the number of columns) to quickly count
+%% how many dots there are on the page.
+%%
+%% Usage: Uncomment the definitions for xcount, ycount, and radius
+%% for the number of dots desired on the page.  Then open this file
+%% in an appropriate viewer program so it can be converted into a
+%% single-page PDF document and optionally sent to a printer.
+
+72 72 scale
+
+%% 1000 dots
+/xcount  25     def
+/ycount  40     def
+/radius   0.07  def
+
+%% 2000 dots
+% /xcount  40     def
+% /ycount  50     def
+% /radius   0.05  def
+
+%% 3000 dots
+% /xcount  50     def
+% /ycount  60     def
+% /radius   0.045 def
+
+%% 4000 dots
+% /xcount  50     def
+% /ycount  80     def
+% /radius   0.038  def
+
+%% 8000 dots
+% /xcount  80     def
+% /ycount 100     def
+% /radius   0.025 def
+
+%% 10000 dots
+% /xcount  80     def
+% /ycount 125     def
+% /radius   0.02  def
+
+1 1 xcount {
+  /xpos exch def
+  1 1 ycount {
+    /ypos exch def
+    xpos 1 sub 6.5 mul xcount 1 sub div 1 add
+    ypos 1 sub 9.0 mul ycount 1 sub div 1 add
+    radius 0 360 arc fill
+  } for
+} for
+
+showpage
